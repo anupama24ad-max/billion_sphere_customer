@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.BillionSphere" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsFloating">true</item>
+
+    </style>
+
+</resources>
