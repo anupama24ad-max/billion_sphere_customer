@@ -1,1 +1,0 @@
-# billion_sphere_customer
