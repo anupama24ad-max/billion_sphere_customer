@@ -39,4 +39,7 @@
     <string name="create_new">Create New</string>
     <string name="congratulations">Congratulations</string>
     <string name="cnt">Continue</string>
+    <string name="please_enter_valid_emailaddress">"Please enter valid emailAddress "</string>
+    <string name="please_enter_valid_password">"Please enter valid password "</string>
+    <string name="password_doesn_t_match">Password doesn\'t match</string>
 </resources>

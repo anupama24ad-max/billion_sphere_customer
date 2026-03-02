@@ -98,88 +98,95 @@ class AppMethods {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
         }
 
-/*
-        suspend fun refreshAccessToken(activity: Activity? = null, callback: (Boolean) -> Unit) {
-
-            var sm = SessionManager(applicationContext!!)
-
-            Log.e(TAG, "refreshTokenApi: @@@@@@@@@@")
-            Log.e(TAG, "refreshTokenApi: sm =${sm.getData(AppStrings.SessionValues.userId, "")}")
-            Log.e(
-                TAG,
-                "refreshTokenApi refresh toke: sm =${
-                    sm.getData(
-                        AppStrings.SessionValues.refreshToken,
-                        ""
-                    )
-                }"
-            )
-
-            getRetrofitInstance()
-
-            val restApi = getRetrofitInstance().create(RestApi::class.java)
-            var headers = HashMap<String, String>()
-            headers[AppStrings.Constants.authorization] =
-                sm.getData(
-                    AppStrings.SessionValues.refreshToken,
-                    sm.getData(AppStrings.SessionValues.refreshToken, "")
-                )
-            var jsonObject = JSONObject()
-            jsonObject.put(
-                AppStrings.InputData.refresh_token,
-                sm.getData(AppStrings.SessionValues.refreshToken, "")
-            )
-            var response = restApi.regenerateAccessToken(
-                headers, jsonObject.toString().toRequestBody(
-                    "application/json".toMediaTypeOrNull()
-                )
-            )
-
-
-            response.enqueue(object : Callback<Any?> {
-                @SuppressLint("SuspiciousIndentation")
-                override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
-                    if (response.code() == 200 || response.code() == 201 || response.code() == 202 || response.code() == 204) {
-                        response.body()?.let {
-                            Log.e(TAG, "onResponse: response :$response")
-                            val rawData = Gson().toJsonTree(response.body()).asJsonObject.toString()
-                            val jsonObject = JSONObject(rawData)
-                            Log.e(TAG, "onResponse: refresh token -> ${jsonObject}")
-                            var data = jsonObject.getJSONObject(AppStrings.ResponseData.data)
-                            sm.setData(
-                                AppStrings.SessionValues.accessToken,
-                                data.getString(AppStrings.SessionValues.accessToken)
-                            )
-                            sm.setData(
-                                AppStrings.SessionValues.refreshToken,
-                                data.getString(AppStrings.SessionValues.refreshToken)
-                            )
-                            // Notify callback that token has been refreshed
-                            callback(true)
-                        }
-                    } else if (response.code() == 401) {
-                        Log.e(TAG, "onResponse: errorcode:${response.errorBody().toString()}")
-                        SessionManagerEvent.show(
-                            handleResponse(
-                                response.errorBody()?.string() ?: "Some Exception Occurred"
-                            ), AppDialogType.SESSION_EXPIRED
-                        )
-                    } else {
-                        Log.e(TAG, "onResponse: errorcode:${response.code()}")
-                    }
-
-                }
-
-                override fun onFailure(call: Call<Any?>, t: Throwable) {
-                    Log.e(TAG, "onFailure: @@@@")
-                    // Notify callback that token refresh failed
-                    callback(false)
-
-                }
-            })
-
+        fun isStrongPassword(pw: String): Boolean {
+            // 8–20 chars, ≥1 uppercase, ≥1 digit, ≥1 special (non-alphanumeric)
+            val regex = Regex("""^(?=.{8,20}$)(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).*$""")
+            return regex.matches(pw)
         }
-*/
+
+
+        /*
+                suspend fun refreshAccessToken(activity: Activity? = null, callback: (Boolean) -> Unit) {
+
+                    var sm = SessionManager(applicationContext!!)
+
+                    Log.e(TAG, "refreshTokenApi: @@@@@@@@@@")
+                    Log.e(TAG, "refreshTokenApi: sm =${sm.getData(AppStrings.SessionValues.userId, "")}")
+                    Log.e(
+                        TAG,
+                        "refreshTokenApi refresh toke: sm =${
+                            sm.getData(
+                                AppStrings.SessionValues.refreshToken,
+                                ""
+                            )
+                        }"
+                    )
+
+                    getRetrofitInstance()
+
+                    val restApi = getRetrofitInstance().create(RestApi::class.java)
+                    var headers = HashMap<String, String>()
+                    headers[AppStrings.Constants.authorization] =
+                        sm.getData(
+                            AppStrings.SessionValues.refreshToken,
+                            sm.getData(AppStrings.SessionValues.refreshToken, "")
+                        )
+                    var jsonObject = JSONObject()
+                    jsonObject.put(
+                        AppStrings.InputData.refresh_token,
+                        sm.getData(AppStrings.SessionValues.refreshToken, "")
+                    )
+                    var response = restApi.regenerateAccessToken(
+                        headers, jsonObject.toString().toRequestBody(
+                            "application/json".toMediaTypeOrNull()
+                        )
+                    )
+
+
+                    response.enqueue(object : Callback<Any?> {
+                        @SuppressLint("SuspiciousIndentation")
+                        override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                            if (response.code() == 200 || response.code() == 201 || response.code() == 202 || response.code() == 204) {
+                                response.body()?.let {
+                                    Log.e(TAG, "onResponse: response :$response")
+                                    val rawData = Gson().toJsonTree(response.body()).asJsonObject.toString()
+                                    val jsonObject = JSONObject(rawData)
+                                    Log.e(TAG, "onResponse: refresh token -> ${jsonObject}")
+                                    var data = jsonObject.getJSONObject(AppStrings.ResponseData.data)
+                                    sm.setData(
+                                        AppStrings.SessionValues.accessToken,
+                                        data.getString(AppStrings.SessionValues.accessToken)
+                                    )
+                                    sm.setData(
+                                        AppStrings.SessionValues.refreshToken,
+                                        data.getString(AppStrings.SessionValues.refreshToken)
+                                    )
+                                    // Notify callback that token has been refreshed
+                                    callback(true)
+                                }
+                            } else if (response.code() == 401) {
+                                Log.e(TAG, "onResponse: errorcode:${response.errorBody().toString()}")
+                                SessionManagerEvent.show(
+                                    handleResponse(
+                                        response.errorBody()?.string() ?: "Some Exception Occurred"
+                                    ), AppDialogType.SESSION_EXPIRED
+                                )
+                            } else {
+                                Log.e(TAG, "onResponse: errorcode:${response.code()}")
+                            }
+
+                        }
+
+                        override fun onFailure(call: Call<Any?>, t: Throwable) {
+                            Log.e(TAG, "onFailure: @@@@")
+                            // Notify callback that token refresh failed
+                            callback(false)
+
+                        }
+                    })
+
+                }
+        */
 
         lateinit var retrofit: Retrofit
   /*      private fun getRetrofitInstance(): Retrofit {

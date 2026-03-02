@@ -32,14 +32,14 @@ android {
             buildConfigField(
                 "String",
                 "SERVER_URL",
-                value = "\"https://www.nscompaniesgrouptraining.website/api/auth/\""
+                value = "\"http://bs.frelenz.tech/api/\""
             )
         }
         debug {
             buildConfigField(
                 "String",
                 "SERVER_URL",
-                value = "\"https://www.nscompaniesgrouptraining.website/api/auth/\""
+                value = "\"http://bs.frelenz.tech/api/\""
             )
 
             buildConfigField(

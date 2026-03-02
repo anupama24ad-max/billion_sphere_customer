@@ -15,6 +15,10 @@ import retrofit2.http.PartMap
 
 interface RestApi {
 
-
+    @POST(RESTURLS.register)
+    suspend fun registerApi(
+        @HeaderMap headers: Map<String, String>,
+        @Body jsonObject: RequestBody
+    ): Response<ApiResult<Any>>
 
 }

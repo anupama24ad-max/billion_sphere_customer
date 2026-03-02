@@ -1,6 +1,7 @@
 package com.billionsphere.ui.register
 
 import android.content.Intent
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,12 +21,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,6 +36,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.withStyle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.billionsphere.R
 import com.billionsphere.ui.components.CompactDropdown
 import com.billionsphere.ui.components.CompactDropdownWithLabel
@@ -48,6 +52,12 @@ import java.nio.file.WatchEvent
 @Composable
 fun RegisterScreen(vm: RegisterViewModel) {
     val focusManager = LocalFocusManager.current
+    val registerUiState by vm.registerUiState.collectAsStateWithLifecycle()
+    val isRegisterEnabled by vm.isRegisterEnabled.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val activity = context as? ComponentActivity
+
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -57,7 +67,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                 .fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-        Box(modifier = Modifier.statusBarsPadding().verticalScroll(rememberScrollState()).imePadding())
+        Box(
+            modifier = Modifier
+                .statusBarsPadding()
+                .verticalScroll(rememberScrollState())
+                .imePadding()
+        )
         {
             Box(
                 modifier = Modifier
@@ -91,10 +106,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         Column(modifier = Modifier.weight(1f)) {
                             LabeledField(
                                 labelRes = R.string.first_name,
-                                value = "",
+                                value = registerUiState.firstName,
                                 placeholderRes = R.string.enter_first_name,
                                 onValueChange = {
-
+                                    vm.updateRegisterUiState {
+                                        copy(firstName = it)
+                                    }
                                 },
                                 labelBold = false,
                                 imeAction = ImeAction.Next,
@@ -107,10 +124,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         Column(modifier = Modifier.weight(1f)) {
                             LabeledField(
                                 labelRes = R.string.last_name,
-                                value = "",
+                                value = registerUiState.lastName,
                                 placeholderRes = R.string.enter_last_name,
                                 onValueChange = {
-
+                                    vm.updateRegisterUiState {
+                                        copy(lastName = it)
+                                    }
                                 },
                                 labelBold = false,
                                 imeAction = ImeAction.Next,
@@ -150,10 +169,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         LabeledField(
                             modifier = Modifier.weight(1f),
                             labelRes = R.string.empty_space,
-                            value = "",
+                            value = registerUiState.mobileNumber,
                             placeholderRes = R.string.enter_mobile_no,
                             onValueChange = {
-
+                                vm.updateRegisterUiState {
+                                    copy(mobileNumber = it)
+                                }
                             },
                             labelBold = false,
                             imeAction = ImeAction.Next,
@@ -165,24 +186,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                     Spacer(modifier = Modifier.height(dimen_10))
                     LabeledField(
                         labelRes = R.string.email_id,
-                        value = "",
+                        value = registerUiState.emailId,
                         placeholderRes = R.string.enter_email_id,
                         onValueChange = {
-
-                        },
-                        labelBold = false,
-                        imeAction = ImeAction.Next,
-                        isRequired = true,
-                        labelMedium = true,
-                        onImeAction = { focusManager.moveFocus(FocusDirection.Down) } // ← moves to next field
-                    )
-                    Spacer(modifier = Modifier.height(dimen_10))
-                    LabeledField(
-                        labelRes = R.string.email_id,
-                        value = "",
-                        placeholderRes = R.string.enter_email_id,
-                        onValueChange = {
-
+                            vm.updateRegisterUiState {
+                                copy(emailId = it)
+                            }
                         },
                         labelBold = false,
                         imeAction = ImeAction.Next,
@@ -193,10 +202,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                     Spacer(modifier = Modifier.height(dimen_10))
                     LabeledField(
                         labelRes = R.string.address,
-                        value = "",
+                        value = registerUiState.address,
                         placeholderRes = R.string.enter_address,
                         onValueChange = {
-
+                            vm.updateRegisterUiState {
+                                copy(address = it)
+                            }
                         },
                         labelBold = false,
                         imeAction = ImeAction.Next,
@@ -209,10 +220,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         Column(modifier = Modifier.weight(1f)) {
                             LabeledField(
                                 labelRes = R.string.city,
-                                value = "",
+                                value = registerUiState.city,
                                 placeholderRes = R.string.enter_city_name,
                                 onValueChange = {
-
+                                    vm.updateRegisterUiState {
+                                        copy(city = it)
+                                    }
                                 },
                                 labelBold = false,
                                 imeAction = ImeAction.Next,
@@ -225,10 +238,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         Column(modifier = Modifier.weight(1f)) {
                             LabeledField(
                                 labelRes = R.string.pin_code,
-                                value = "",
+                                value = registerUiState.pinCode,
                                 placeholderRes = R.string.enter_pin_code,
                                 onValueChange = {
-
+                                    vm.updateRegisterUiState {
+                                        copy(pinCode = it)
+                                    }
                                 },
                                 labelBold = false,
                                 imeAction = ImeAction.Next,
@@ -254,10 +269,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                     Spacer(modifier = Modifier.height(dimen_10))
                     LabeledField(
                         labelRes = R.string.password,
-                        value = "",
+                        value = registerUiState.password,
                         placeholderRes = R.string.enter_your_password,
                         onValueChange = {
-
+                            vm.updateRegisterUiState {
+                                copy(password = it)
+                            }
                         },
                         labelMedium = true,
                         isPassword = true,
@@ -269,10 +286,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                     Spacer(modifier = Modifier.height(dimen_10))
                     LabeledField(
                         labelRes = R.string.confirm_password,
-                        value = "",
+                        value = registerUiState.confirmPassword,
                         placeholderRes = R.string.enter_your_confirm_password,
                         onValueChange = {
-
+                            vm.updateRegisterUiState {
+                                copy(confirmPassword = it)
+                            }
                         },
                         labelMedium = true,
                         isPassword = true,
@@ -284,10 +303,12 @@ fun RegisterScreen(vm: RegisterViewModel) {
                     Spacer(modifier = Modifier.height(dimen_10))
                     LabeledField(
                         labelRes = R.string.sponsor_name,
-                        value = "",
+                        value = registerUiState.sponsorName,
                         placeholderRes = R.string.enter_sponsor_name,
                         onValueChange = {
-
+                            vm.updateRegisterUiState {
+                                copy(sponsorName = it)
+                            }
                         },
                         labelMedium = true,
                         labelBold = false,
@@ -329,9 +350,10 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         color1 = Violet,
                         color2 = Maroon,
                         borderColor = Color.Transparent,
-                        shape = dimen_16
+                        shape = dimen_16,
+                        enabled = isRegisterEnabled
                     ) {
-
+                        vm.onClickRegisterBtn(activity)
                     }
                     Spacer(modifier = Modifier.height(dimen_12))
                     TermsAndConditionsCheckbox(
