@@ -23,7 +23,7 @@ class AppStrings {
         companion object {
 
             var authorization = "Authorization"
-//            var defaultToken = BuildConfig.API_KEY
+            var defaultToken = BuildConfig.API_KEY
 
             val android = "1"
             val deviceId = "dNDZvU4NQSi2w2sNXPgrEt:APA91bFEnTSViQCaK5y9UyrShyQ4p8-oB_LiKPzGfL-yRAVhvouPHgtCpelZ424SiGVBhrSn71qOebj82BhPLzjG6EQl-jfNkwb_5c_gBhGx1Mrm5mUMTYo"
@@ -107,11 +107,11 @@ class AppStrings {
 
         }
     }
-    class CustomerStatus{
+    class DropDownType{
         companion object{
-            val pending = 0
-            val completed = 1
-            val ongoing = 2
+            val country = 1
+            val role = 2
+            val nav = 3
         }
     }
 

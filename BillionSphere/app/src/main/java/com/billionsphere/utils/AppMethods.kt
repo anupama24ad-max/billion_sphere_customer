@@ -71,13 +71,13 @@ class AppMethods {
         ): HashMap<String, String> {
             val headers = HashMap<String, String>()
 
-          /*  if (defaultToken) {
+            if (defaultToken) {
                 headers[AppStrings.Constants.authorization] = AppStrings.Constants.defaultToken
             } else {
                 headers[AppStrings.Constants.authorization] =
                     sm?.getData<String>(AppStrings.SessionValues.accessToken, "").toString()
 
-            }*/
+            }
             return headers
 
         }

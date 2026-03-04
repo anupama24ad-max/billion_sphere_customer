@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.billionsphere.R
 import com.billionsphere.ui.components.CompactDropdown
 import com.billionsphere.ui.components.CompactDropdownWithLabel
+import com.billionsphere.ui.components.DefaultBottomSheet
 import com.billionsphere.ui.components.GradientButton
 import com.billionsphere.ui.components.LabelTextview
 import com.billionsphere.ui.components.LabeledField
@@ -49,6 +52,7 @@ import com.billionsphere.ui.components.Textview
 import com.billionsphere.ui.theme.*
 import java.nio.file.WatchEvent
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(vm: RegisterViewModel) {
     val focusManager = LocalFocusManager.current
@@ -56,6 +60,8 @@ fun RegisterScreen(vm: RegisterViewModel) {
     val isRegisterEnabled by vm.isRegisterEnabled.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val activity = context as? ComponentActivity
+    val sheetState = rememberModalBottomSheetState()
+
 
 
 
@@ -156,15 +162,23 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         size = font_12,
                         medium = true
                     )
+                    Spacer(modifier = Modifier.height(dimen_4))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CompactDropdown(
                             modifier = Modifier
                                 .width(dimen_42)
-                                .height(dimen_32),
+                                .height(dimen_46),
                             placeholder = stringResource(R.string.empty_space),
                             onClick = {
-
+                                vm.updateRegisterUiState { copy(isRegister = true) }
                             })
+                        if (registerUiState.isRegister) {
+                            DefaultBottomSheet(
+                                sheetState = sheetState,
+                                title = stringResource(R.string.select_country),
+                                onDismiss = { vm.updateRegisterUiState { copy(isRegister = false) } }
+                            )
+                        }
                         Spacer(modifier = Modifier.width(dimen_4))
                         LabeledField(
                             modifier = Modifier.weight(1f),

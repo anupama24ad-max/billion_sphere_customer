@@ -8,6 +8,8 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
+val defaultToken = project.findProperty("defaultToken") ?: "default_value_if_not_found"
+
 android {
     namespace = "com.billionsphere"
     compileSdk = 36
@@ -34,6 +36,8 @@ android {
                 "SERVER_URL",
                 value = "\"http://bs.frelenz.tech/api/\""
             )
+            buildConfigField("String", "API_KEY", "$defaultToken")
+
         }
         debug {
             buildConfigField(
@@ -119,6 +123,8 @@ android {
                 "CALL",
                 value = "\"https://www.nscompaniesgrouptraining.website/callUs\""
             )
+            buildConfigField("String", "API_KEY", "$defaultToken")
+
 
         }
 

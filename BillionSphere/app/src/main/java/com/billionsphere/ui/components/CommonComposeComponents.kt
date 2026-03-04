@@ -7,14 +7,17 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.ClickableText
@@ -22,10 +25,14 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -207,11 +214,11 @@ fun LabeledField(
     singleLine: Boolean = true,
     isPhoneNumber: Boolean = false,
     enabled: Boolean = true,
-    height: Dp = dimen_32,
+    height: Dp = dimen_46,
     moreText: Boolean = false,
     isRequired: Boolean = false,
     isLock: Boolean = false,
-    textColor : Color = LightGrey
+    textColor: Color = LightGrey
 ) {
     val labelText = buildAnnotatedString {
         append(stringResource(labelRes))
@@ -295,7 +302,7 @@ fun CompactEditText(
     height: Dp = dimen_32,
     moreText: Boolean = false,
     singleLine: Boolean = true,
-    textColor : Color = LightGrey,
+    textColor: Color = LightGrey,
     isLock: Boolean = false,
     onImeAction: () -> Unit = {},
 
@@ -428,7 +435,8 @@ fun CompactDropdown(
         ) {
 
             Row(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .padding(horizontal = dimen_12),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -458,7 +466,7 @@ fun CompactDropdownWithLabel(
     placeholder: String = "Select option",
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    height: Dp = dimen_32,
+    height: Dp = dimen_46,
     onClick: () -> Unit,
     color: Color = LightGrey,
     isImage: Boolean = false,
@@ -513,7 +521,8 @@ fun CompactDropdownWithLabel(
         ) {
 
             Row(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .padding(horizontal = dimen_12),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -707,7 +716,10 @@ fun TermsAndConditionsCheckbox(
 
         ClickableText(
             text = annotatedText,
-            style = MaterialTheme.typography.bodyMedium.copy(color = Color.White, textAlign = TextAlign.Center),
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = Color.White,
+                textAlign = TextAlign.Center
+            ),
             onClick = { offset ->
                 annotatedText.getStringAnnotations(tag = "TERMS", start = offset, end = offset)
                     .firstOrNull()?.let { onTermsClick() }
@@ -716,5 +728,39 @@ fun TermsAndConditionsCheckbox(
                     .firstOrNull()?.let { onPrivacyClick() }
             }
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DefaultBottomSheet(
+    sheetState: SheetState,
+    title: String,
+    onDismiss: () -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = onDismiss ,
+        sheetState = sheetState,
+        containerColor = Color.White
+    ) {
+
+        Column(Modifier.padding(dimen_16)) {
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = dimen_12),
+                contentAlignment = Alignment.Center
+            ) {
+                Textview(
+                    text = title,
+                    size = font_14,
+                    bold = true,
+                    color = Color.Black
+                )
+            }
+
+
+        }
     }
 }

@@ -21,4 +21,10 @@ interface RestApi {
         @Body jsonObject: RequestBody
     ): Response<ApiResult<Any>>
 
+    @POST(RESTURLS.dropdowns)
+    suspend fun dropdownsApi(
+        @HeaderMap headers: Map<String, String>,
+        @Body jsonObject: RequestBody
+    ): Response<ApiResult<Any>>
+
 }

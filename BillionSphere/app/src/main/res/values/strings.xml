@@ -42,4 +42,5 @@
     <string name="please_enter_valid_emailaddress">"Please enter valid emailAddress "</string>
     <string name="please_enter_valid_password">"Please enter valid password "</string>
     <string name="password_doesn_t_match">Password doesn\'t match</string>
+    <string name="select_country">Select Country</string>
 </resources>

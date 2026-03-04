@@ -50,6 +50,10 @@ class RegisterViewModel @Inject constructor(
         MutableLiveData()
     val registerApiResponse: LiveData<ApiResult<Any>?> = _registerApiResponse
 
+    private val _dropDownApiResponse: MutableLiveData<ApiResult<Any>?> =
+        MutableLiveData()
+    val dropDownApiResponse: LiveData<ApiResult<Any>?> = _dropDownApiResponse
+
     var errorMessage = MutableLiveData<String>("")
 
 
@@ -119,6 +123,29 @@ class RegisterViewModel @Inject constructor(
                         },
                         failure = { body, errorType, message ->
                             Log.e(TAG, "registerApi: message --> ${message}")
+                            errorMessage.value = message.toString()
+                            showError(message.toString())
+                        })
+                setIsLoading(false)
+            }
+        }
+    }
+
+    fun dropdownsApi(
+    ) {
+        val jsonObj = JSONObject()
+        jsonObj.put(AppStrings.InputData.type, AppStrings.DropDownType.country)
+        viewModelScope.launch {
+            runWhenOnline {
+                setIsLoading(true)
+                repo.dropdownsApi(AppMethods.getToken(sm, true), jsonObj)
+                    .isRequestCallSuspendSuccess(
+                        success = {
+                            CLog.e(TAG, it.toString())
+                            _dropDownApiResponse.value = it
+                        },
+                        failure = { body, errorType, message ->
+                            Log.e(TAG, "dropdownsApi: message --> ${message}")
                             errorMessage.value = message.toString()
                             showError(message.toString())
                         })
