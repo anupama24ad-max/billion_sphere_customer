@@ -5,6 +5,7 @@ import com.billionsphere.api.ApiResult
 import com.billionsphere.api.Resource
 import com.billionsphere.api.RestApi
 import com.billionsphere.api.safeApiCall
+import com.billionsphere.ui.register.model.GetDropDownsResponse
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -31,7 +32,7 @@ class Repository @Inject constructor(val api: RestApi) {
 
     suspend fun dropdownsApi(
         headers: Map<String, String>, jsonObj: JSONObject,
-    ): Resource<ApiResult<Any>?> {
+    ): Resource<ApiResult<GetDropDownsResponse>?> {
 
         return safeApiCall {
             api.dropdownsApi(

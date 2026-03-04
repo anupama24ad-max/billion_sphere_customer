@@ -14,5 +14,6 @@ data class RegisterUiState (
     var confirmPassword : String = "",
     var sponsorName : String = "",
     var referenceCode : String = "",
-    var isRegister : Boolean = false
+    var isRegister : Boolean = false,
+    var countryCode : String = ""
     )

@@ -34,7 +34,7 @@ android {
             buildConfigField(
                 "String",
                 "SERVER_URL",
-                value = "\"http://bs.frelenz.tech/api/\""
+                value = "\"https://bs.frelenz.tech/api/auth/\""
             )
             buildConfigField("String", "API_KEY", "$defaultToken")
 
@@ -43,7 +43,7 @@ android {
             buildConfigField(
                 "String",
                 "SERVER_URL",
-                value = "\"http://bs.frelenz.tech/api/\""
+                value = "\"https://bs.frelenz.tech/api/auth/\""
             )
 
             buildConfigField(

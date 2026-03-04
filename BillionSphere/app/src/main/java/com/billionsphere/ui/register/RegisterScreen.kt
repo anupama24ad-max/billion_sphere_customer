@@ -61,8 +61,7 @@ fun RegisterScreen(vm: RegisterViewModel) {
     val context = LocalContext.current
     val activity = context as? ComponentActivity
     val sheetState = rememberModalBottomSheetState()
-
-
+    val countryList by vm.countryList.collectAsStateWithLifecycle()
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -168,7 +167,11 @@ fun RegisterScreen(vm: RegisterViewModel) {
                             modifier = Modifier
                                 .width(dimen_42)
                                 .height(dimen_46),
-                            placeholder = stringResource(R.string.empty_space),
+                            placeholder = registerUiState.countryCode.ifEmpty {
+                                stringResource(
+                                    R.string.empty_space
+                                )
+                            },
                             onClick = {
                                 vm.updateRegisterUiState { copy(isRegister = true) }
                             })
@@ -176,7 +179,16 @@ fun RegisterScreen(vm: RegisterViewModel) {
                             DefaultBottomSheet(
                                 sheetState = sheetState,
                                 title = stringResource(R.string.select_country),
-                                onDismiss = { vm.updateRegisterUiState { copy(isRegister = false) } }
+                                countryList = countryList!!,
+                                onDismiss = { vm.updateRegisterUiState { copy(isRegister = false) } },
+                                onCountrySelected = {
+                                    vm.updateRegisterUiState {
+                                        copy(
+                                            countryId = it.id ?: 0,
+                                            countryCode = it.dialing_code ?: ""
+                                        )
+                                    }
+                                }
                             )
                         }
                         Spacer(modifier = Modifier.width(dimen_4))

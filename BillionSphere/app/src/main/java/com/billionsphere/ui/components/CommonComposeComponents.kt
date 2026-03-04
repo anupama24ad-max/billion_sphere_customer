@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.ClickableText
@@ -75,6 +76,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import com.billionsphere.R
+import com.billionsphere.ui.register.model.GetDropDownsResponseItem
 import com.billionsphere.ui.theme.*
 
 @Composable
@@ -736,28 +738,56 @@ fun TermsAndConditionsCheckbox(
 fun DefaultBottomSheet(
     sheetState: SheetState,
     title: String,
+    countryList: List<GetDropDownsResponseItem>,
+    onCountrySelected: (GetDropDownsResponseItem) -> Unit,
     onDismiss: () -> Unit
 ) {
     ModalBottomSheet(
-        onDismissRequest = onDismiss ,
+        onDismissRequest = onDismiss,
         sheetState = sheetState,
         containerColor = Color.White
     ) {
 
         Column(Modifier.padding(dimen_16)) {
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = dimen_12),
-                contentAlignment = Alignment.Center
-            ) {
-                Textview(
-                    text = title,
-                    size = font_14,
-                    bold = true,
-                    color = Color.Black
-                )
+            Textview(
+                text = title,
+                size = font_18,
+                bold = true,
+                color = DarkBlue,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(dimen_16))
+            if (countryList.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(dimen_20),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Textview(
+                        text = stringResource(R.string.no_data_found),
+                        size = font_14,
+                        bold = true,
+                        color = Color.Black
+                    )
+                }
+            } else {
+                LazyColumn {
+                    items(countryList) { country ->
+                        Textview(
+                            text = country.dialing_code.toString() + " " + country.country_name.toString(),
+                            size = font_14,
+                            color = Color.Black,
+                            modifier = Modifier
+                                .padding(horizontal = dimen_8, vertical = dimen_12)
+                                .clickable {
+                                    onCountrySelected(country)
+                                    onDismiss()
+                                }
+                        )
+                    }
+                }
             }
 
 

@@ -1,5 +1,6 @@
 package com.billionsphere.api
 
+import com.billionsphere.ui.register.model.GetDropDownsResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -25,6 +26,6 @@ interface RestApi {
     suspend fun dropdownsApi(
         @HeaderMap headers: Map<String, String>,
         @Body jsonObject: RequestBody
-    ): Response<ApiResult<Any>>
+    ): Response<ApiResult<GetDropDownsResponse>>
 
 }

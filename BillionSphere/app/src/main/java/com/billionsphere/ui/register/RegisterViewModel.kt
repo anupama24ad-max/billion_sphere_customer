@@ -12,6 +12,8 @@ import com.billionsphere.api.ApiResult
 import com.billionsphere.api.isRequestCallSuspendSuccess
 import com.billionsphere.core.BaseViewModel
 import com.billionsphere.repository.Repository
+import com.billionsphere.ui.register.model.GetDropDownsResponse
+import com.billionsphere.ui.register.model.GetDropDownsResponseItem
 import com.billionsphere.ui.register.model.RegisterUiState
 import com.billionsphere.utils.AppMethods
 import com.billionsphere.utils.AppStrings
@@ -50,9 +52,12 @@ class RegisterViewModel @Inject constructor(
         MutableLiveData()
     val registerApiResponse: LiveData<ApiResult<Any>?> = _registerApiResponse
 
-    private val _dropDownApiResponse: MutableLiveData<ApiResult<Any>?> =
+    private val _dropDownApiResponse: MutableLiveData<ApiResult<GetDropDownsResponse>?> =
         MutableLiveData()
-    val dropDownApiResponse: LiveData<ApiResult<Any>?> = _dropDownApiResponse
+    val dropDownApiResponse: LiveData<ApiResult<GetDropDownsResponse>?> = _dropDownApiResponse
+
+    val _countryList = MutableStateFlow<List<GetDropDownsResponseItem>?>(emptyList())
+    val countryList: StateFlow<List<GetDropDownsResponseItem>?> = _countryList
 
     var errorMessage = MutableLiveData<String>("")
 
