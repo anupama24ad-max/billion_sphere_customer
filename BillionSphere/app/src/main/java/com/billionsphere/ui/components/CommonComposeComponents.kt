@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +38,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -51,6 +53,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.Key
@@ -78,6 +81,7 @@ import androidx.compose.ui.unit.TextUnit
 import com.billionsphere.R
 import com.billionsphere.ui.register.model.GetDropDownsResponseItem
 import com.billionsphere.ui.theme.*
+import kotlinx.coroutines.delay
 
 @Composable
 fun GradientButton(
@@ -347,16 +351,16 @@ fun CompactEditText(
                 BasicTextField(
                     value = value,
                     onValueChange = {
-                     /*   if (isPhoneNumber) {
-                            // Allow only digits & max 10 length
-                            val digitsOnly = it.filter { it.isDigit() }
-                            if (digitsOnly.length <= 10) {
-                                onValueChange(digitsOnly)
-                            }
-                        } else {
+                        /*   if (isPhoneNumber) {
+                               // Allow only digits & max 10 length
+                               val digitsOnly = it.filter { it.isDigit() }
+                               if (digitsOnly.length <= 10) {
+                                   onValueChange(digitsOnly)
+                               }
+                           } else {
 
-                        }*/
-                            onValueChange(it)
+                           }*/
+                        onValueChange(it)
                     },
                     singleLine = singleLine,
                     enabled = enabled,
@@ -794,4 +798,82 @@ fun DefaultBottomSheet(
 
         }
     }
+}
+
+@Composable
+fun ResendOtp(
+    onResendOtp: () -> Unit,
+    totalSeconds: Int = 150,
+) {
+    var secondsLeft by rememberSaveable { mutableIntStateOf(totalSeconds) }
+    var timerKey by rememberSaveable { mutableIntStateOf(0) } // bump to restart timer
+    val isEnabled = secondsLeft == 0
+
+
+    // run/restart countdown whenever timerKey changes
+    LaunchedEffect(timerKey) {
+        secondsLeft = totalSeconds
+        while (secondsLeft > 0) {
+            delay(1_000)
+            secondsLeft--
+        }
+    }
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+
+
+        val annotatedText = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    color = Color.White,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = font_12
+                )
+            ) {
+                append(stringResource(R.string.i_don_t_receive_code) + " ")
+            }
+
+            pushStringAnnotation(tag = "RESENDOTP", annotation = "resendotp")
+            withStyle(
+                style = SpanStyle(
+                    color = if (isEnabled) Color.White else LightGrey,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = font_12
+                )
+            ) {
+                append(stringResource(R.string.resend_otp))
+            }
+
+        }
+
+        ClickableText(
+            text = annotatedText,
+            style = MaterialTheme.typography.bodyMedium.copy(color = Grey),
+            onClick = { offset ->
+                if (!isEnabled) return@ClickableText
+
+                annotatedText.getStringAnnotations(tag = "RESENDOTP", start = offset, end = offset)
+                    .firstOrNull()?.let {
+                        onResendOtp()
+                        timerKey++
+                    }
+
+            }
+        )
+        Spacer(modifier = Modifier.width(dimen_8))
+        Textview(
+            text = "(" + formatAsMMSS(secondsLeft) + ")",
+            color = if (isEnabled) LightGrey else Color.White,
+            size = font_12,
+        )
+    }
+}
+
+private fun formatAsMMSS(seconds: Int): String {
+    val m = seconds / 60
+    val s = seconds % 60
+    return String.format("%02d:%02d", m, s)
 }

@@ -42,6 +42,18 @@ interface RestApi {
         @Body jsonObject: RequestBody
     ): Response<ApiResult<Any>>
 
+    @POST(RESTURLS.verifyOtp)
+    suspend fun verifyOtpApi(
+        @HeaderMap headers: Map<String, String>,
+        @Body jsonObject: RequestBody
+    ): Response<ApiResult<Any>>
+
+    @POST(RESTURLS.resendOtp)
+    suspend fun resendOtpApi(
+        @HeaderMap headers: Map<String, String>,
+        @Body jsonObject: RequestBody
+    ): Response<ApiResult<Any>>
+
 
 
 }

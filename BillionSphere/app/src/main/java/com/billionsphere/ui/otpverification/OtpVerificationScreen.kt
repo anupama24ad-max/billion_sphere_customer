@@ -18,7 +18,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,11 +33,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.billionsphere.R
 import com.billionsphere.ui.components.CompactDropdown
 import com.billionsphere.ui.components.GradientButton
 import com.billionsphere.ui.components.LabeledField
 import com.billionsphere.ui.components.OtpView
+import com.billionsphere.ui.components.ResendOtp
 import com.billionsphere.ui.components.Textview
 import com.billionsphere.ui.resetpassword.ResetPasswordActivity
 import com.billionsphere.ui.theme.*
@@ -45,6 +49,8 @@ fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
     val activity = context as? ComponentActivity
+    val verifyUiState by vm.verifyUiState.collectAsStateWithLifecycle()
+    val isOtpEnabled by vm.isOtpEnabled.collectAsStateWithLifecycle()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -109,21 +115,18 @@ fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
                         onFilled = {
                         },
                         onChanged = {
+                            vm.updateVerifyUiState { copy(otp = it) }
+
                         }
 
                     )
                     Spacer(modifier = Modifier.height(dimen_18))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Textview(text = "I don't Receive code!", color = LightGrey, size = font_12)
-                        Spacer(modifier = Modifier.width(dimen_2))
-                        Textview(text = "Resend Otp", color = LightGrey, size = font_12)
-                        Spacer(modifier = Modifier.width(dimen_3))
-                        Textview(text = "(Time)", color = LightGrey, size = font_12)
-
-                    }
+                    ResendOtp(
+                        {
+                            vm.resendOtpApi()
+                            vm.updateVerifyUiState { copy(otp = "") }
+                        },
+                    )
                     Spacer(modifier = Modifier.height(dimen_38))
                     GradientButton(
                         text = stringResource(R.string.next),
@@ -133,10 +136,10 @@ fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
                         color1 = Violet,
                         color2 = Maroon,
                         borderColor = Color.Transparent,
-                        shape = dimen_16
+                        shape = dimen_16,
+                        enabled = isOtpEnabled
                     ) {
-                        val intent = Intent(context, ResetPasswordActivity::class.java)
-                        context.startActivity(intent)
+                        vm.verifyOtpApi()
                     }
                 }
             }

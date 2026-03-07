@@ -63,6 +63,29 @@ class Repository @Inject constructor(val api: RestApi) {
             )
         }
     }
+    suspend fun verifyOtpApi(
+        headers: Map<String, String>, jsonObj: JSONObject,
+    ): Resource<ApiResult<Any>?> {
+
+        return safeApiCall {
+            api.verifyOtpApi(
+                headers, jsonObj.toString()
+                    .toRequestBody("application/json".toMediaTypeOrNull())
+            )
+        }
+    }
+
+    suspend fun resendOtpApi(
+        headers: Map<String, String>, jsonObj: JSONObject,
+    ): Resource<ApiResult<Any>?> {
+
+        return safeApiCall {
+            api.resendOtpApi(
+                headers, jsonObj.toString()
+                    .toRequestBody("application/json".toMediaTypeOrNull())
+            )
+        }
+    }
 
 
 }

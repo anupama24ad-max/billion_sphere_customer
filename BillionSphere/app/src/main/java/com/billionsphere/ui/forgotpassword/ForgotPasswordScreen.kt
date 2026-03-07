@@ -233,7 +233,9 @@ fun ForgotPasswordScreen(vm: RegisterViewModel) {
                         shape = dimen_16,
                         enabled = isForgotPasswordEnabled
                     ) {
-                        vm.forgotPasswordValidation()
+//                        vm.forgotPasswordValidation()
+                        val intent = Intent(context, OtpVerificationActivity::class.java)
+                        context.startActivity(intent)
                     }
                 }
             }

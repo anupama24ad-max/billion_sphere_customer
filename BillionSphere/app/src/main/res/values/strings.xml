@@ -48,4 +48,6 @@
     <string name="mobile_number_length_between_3_to_15">Mobile number length between 3 to 15</string>
     <string name="otp">Otp</string>
     <string name="verification">Verification</string>
+    <string name="i_don_t_receive_code">I don\'t Receive code !</string>
+    <string name="resend_otp">Resend Otp</string>
 </resources>

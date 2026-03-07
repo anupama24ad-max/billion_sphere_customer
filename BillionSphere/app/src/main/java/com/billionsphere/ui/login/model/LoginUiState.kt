@@ -7,5 +7,6 @@ data class LoginUiState(
     var countryCode: String = "",
     var isLogin: Boolean = false,
     var countryId: Int = 0,
-    var type : Int = 0
+    var type : Int = 0,
+    var otp : String = ""
 )

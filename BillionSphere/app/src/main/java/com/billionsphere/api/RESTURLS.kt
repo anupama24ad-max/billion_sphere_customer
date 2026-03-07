@@ -6,6 +6,8 @@ class RESTURLS {
         const val register = "register"
         const val dropdowns = "dropdowns"
         const val forgotPassword = "forgot-password"
+        const val verifyOtp = "verify-otp"
+        const val resendOtp = "resend-otp"
     }
 
 }

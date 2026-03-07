@@ -59,6 +59,8 @@ class AppStrings {
             var sponser_name = "sponser_name"
             var reference_code = "reference_code"
             var platform = "platform"
+            var user_id = "user_id"
+            var otp = "otp"
 
 
         }
