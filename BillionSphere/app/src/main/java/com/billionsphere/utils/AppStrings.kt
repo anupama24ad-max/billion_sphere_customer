@@ -58,7 +58,7 @@ class AppStrings {
             var multi_role_ids = "multi_role_ids"
             var sponser_name = "sponser_name"
             var reference_code = "reference_code"
-            var platform = ""
+            var platform = "platform"
 
 
         }
@@ -114,6 +114,7 @@ class AppStrings {
             val nav = 3
         }
     }
+
 
 
 }

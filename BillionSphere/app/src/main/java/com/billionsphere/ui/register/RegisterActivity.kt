@@ -17,7 +17,7 @@ class RegisterActivity : BaseVMComposeActivity<RegisterViewModel>(RegisterViewMo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        apiCalls()
+//        apiCalls()
         setObservers()
     }
 
@@ -26,12 +26,8 @@ class RegisterActivity : BaseVMComposeActivity<RegisterViewModel>(RegisterViewMo
             it?.data.let {
                 val newCountryList = it.orEmpty()
                 viewModel._countryList.value = newCountryList
-                Log.e(TAG, "setObservers: ${viewModel._countryList.value?.size}", )
             }
         }
     }
 
-    private fun apiCalls() {
-        viewModel.dropdownsApi()
-    }
 }

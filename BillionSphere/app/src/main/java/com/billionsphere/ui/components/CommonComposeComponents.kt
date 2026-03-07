@@ -347,19 +347,20 @@ fun CompactEditText(
                 BasicTextField(
                     value = value,
                     onValueChange = {
-                        if (isPhoneNumber) {
+                     /*   if (isPhoneNumber) {
                             // Allow only digits & max 10 length
                             val digitsOnly = it.filter { it.isDigit() }
                             if (digitsOnly.length <= 10) {
                                 onValueChange(digitsOnly)
                             }
                         } else {
+
+                        }*/
                             onValueChange(it)
-                        }
                     },
                     singleLine = singleLine,
                     enabled = enabled,
-                    textStyle = TextStyle(color = LightGrey, font_10),
+                    textStyle = TextStyle(color = textColor, font_10),
                     visualTransformation = if (isPassword && obscure) PasswordVisualTransformation() else VisualTransformation.None,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = if (isPassword) KeyboardType.Password else if (isPhoneNumber) KeyboardType.Number else KeyboardType.Text,

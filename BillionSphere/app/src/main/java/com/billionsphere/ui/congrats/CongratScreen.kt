@@ -33,11 +33,11 @@ import androidx.compose.ui.unit.dp
 import com.billionsphere.R
 import com.billionsphere.ui.components.GradientButton
 import com.billionsphere.ui.components.Textview
-import com.billionsphere.ui.forgotpassword.ForgotPasswordViewModel
+import com.billionsphere.ui.register.RegisterViewModel
 import com.billionsphere.ui.theme.*
 
 @Composable
-fun CongratScreen(vm: ForgotPasswordViewModel) {
+fun CongratScreen(vm: RegisterViewModel) {
 
     Box(modifier = Modifier.fillMaxSize()) {
 

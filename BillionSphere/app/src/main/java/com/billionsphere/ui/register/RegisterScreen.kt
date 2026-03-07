@@ -206,6 +206,7 @@ fun RegisterScreen(vm: RegisterViewModel) {
                             imeAction = ImeAction.Next,
                             isRequired = false,
                             labelMedium = true,
+                            isPhoneNumber = true,
                             onImeAction = { focusManager.moveFocus(FocusDirection.Down) } // ← moves to next field
                         )
                     }
@@ -282,7 +283,7 @@ fun RegisterScreen(vm: RegisterViewModel) {
 
                     }
                     Spacer(modifier = Modifier.height(dimen_10))
-                    CompactDropdownWithLabel(
+                /*    CompactDropdownWithLabel(
                         placeholder = stringResource(R.string.select_state),
                         isImage = true,
                         labelMedium = true,
@@ -291,6 +292,22 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         },
                         labelRes = R.string.state,
                         isRequired = true
+                    )*/
+                    LabeledField(
+                        labelRes = R.string.state,
+                        value = registerUiState.state,
+                        placeholderRes = R.string.enter_state,
+                        onValueChange = {
+                            vm.updateRegisterUiState {
+                                copy(state = it)
+                            }
+                        },
+                        labelMedium = true,
+                        isPassword = true,
+                        labelBold = false,
+                        isRequired = true,
+                        imeAction = ImeAction.Next,
+                        onImeAction = { focusManager.moveFocus(FocusDirection.Down) } // ← moves to next field
                     )
                     Spacer(modifier = Modifier.height(dimen_10))
                     LabeledField(
@@ -363,6 +380,7 @@ fun RegisterScreen(vm: RegisterViewModel) {
                         onFilled = {
                         },
                         onChanged = {
+                            vm.updateRegisterUiState{copy(referenceCode = it)}
                         }
 
                     )

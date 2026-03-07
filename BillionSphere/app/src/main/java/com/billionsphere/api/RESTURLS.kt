@@ -5,6 +5,7 @@ class RESTURLS {
         const val login = "login"
         const val register = "register"
         const val dropdowns = "dropdowns"
+        const val forgotPassword = "forgot-password"
     }
 
 }

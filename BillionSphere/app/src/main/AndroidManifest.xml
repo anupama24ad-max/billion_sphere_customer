@@ -57,6 +57,11 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.BillionSphere" />
+        <activity
+            android:name=".ui.otpverification.OtpVerificationActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.BillionSphere" />
     </application>
 
 </manifest>

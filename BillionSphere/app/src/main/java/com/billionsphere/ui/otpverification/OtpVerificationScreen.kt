@@ -1,8 +1,9 @@
-package com.billionsphere.ui.resetpassword
+package com.billionsphere.ui.otpverification
 
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,19 +30,18 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import com.billionsphere.R
 import com.billionsphere.ui.components.CompactDropdown
 import com.billionsphere.ui.components.GradientButton
 import com.billionsphere.ui.components.LabeledField
 import com.billionsphere.ui.components.OtpView
 import com.billionsphere.ui.components.Textview
-import com.billionsphere.ui.congrats.CongratActivity
-import com.billionsphere.ui.congrats.CongratScreen
+import com.billionsphere.ui.resetpassword.ResetPasswordActivity
 import com.billionsphere.ui.theme.*
 
-
 @Composable
-fun ResetPasswordScreen(vm: ResetPasswordViewModel) {
+fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
     val activity = context as? ComponentActivity
@@ -84,51 +84,47 @@ fun ResetPasswordScreen(vm: ResetPasswordViewModel) {
                 )
                 {
                     Textview(
-                        text = stringResource(R.string.create_new),
+                        text = stringResource(R.string.otp),
                         color = LightWhite,
                         size = font_40,
                         semiBold = true
                     )
                     Textview(
-                        text = stringResource(R.string.password),
+                        text = stringResource(R.string.verification),
                         color = LightWhite,
                         size = font_40,
                         semiBold = true
                     )
                     Spacer(modifier = Modifier.height(dimen_22))
-                    LabeledField(
-                        labelRes = R.string.password,
-                        value = "",
-                        placeholderRes = R.string.enter_your_password,
-                        onValueChange = {
-
-                        },
-                        labelBold = false,
-                        imeAction = ImeAction.Next,
-                        isRequired = true,
-                        labelMedium = true,
-                        height = dimen_55,
-                        isPassword = true,
-                        onImeAction = { focusManager.moveFocus(FocusDirection.Down) } // ← moves to next field
-                    )
+                    Row {
+                        Textview(
+                            text = "Enter Otp",
+                            color = LightGrey,
+                            size = font_14,
+                            medium = true
+                        )
+                    }
                     Spacer(modifier = Modifier.height(dimen_10))
-                    LabeledField(
-                        labelRes = R.string.confirm_password,
-                        value = "",
-                        placeholderRes = R.string.enter_your_confirm_password,
-                        onValueChange = {
-
+                    OtpView(
+                        onFilled = {
                         },
-                        labelBold = false,
-                        imeAction = ImeAction.Next,
-                        isRequired = true,
-                        labelMedium = true,
-                        height = dimen_55,
-                        isPassword = true,
-                        onImeAction = { focusManager.clearFocus() } // ← moves to next field
-                    )
+                        onChanged = {
+                        }
 
-                    Spacer(modifier = Modifier.height(dimen_42))
+                    )
+                    Spacer(modifier = Modifier.height(dimen_18))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Textview(text = "I don't Receive code!", color = LightGrey, size = font_12)
+                        Spacer(modifier = Modifier.width(dimen_2))
+                        Textview(text = "Resend Otp", color = LightGrey, size = font_12)
+                        Spacer(modifier = Modifier.width(dimen_3))
+                        Textview(text = "(Time)", color = LightGrey, size = font_12)
+
+                    }
+                    Spacer(modifier = Modifier.height(dimen_38))
                     GradientButton(
                         text = stringResource(R.string.next),
                         size = font_16,
@@ -139,7 +135,7 @@ fun ResetPasswordScreen(vm: ResetPasswordViewModel) {
                         borderColor = Color.Transparent,
                         shape = dimen_16
                     ) {
-                        val intent = Intent(context, CongratActivity::class.java)
+                        val intent = Intent(context, ResetPasswordActivity::class.java)
                         context.startActivity(intent)
                     }
                 }

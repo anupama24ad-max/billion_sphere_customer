@@ -1,4 +1,4 @@
-package com.billionsphere.ui.forgotpassword
+package com.billionsphere.ui.otpverification
 
 import android.app.Application
 import com.billionsphere.core.BaseViewModel
@@ -8,9 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ForgotPasswordViewModel @Inject constructor(
+class OtpVerificationViewModel @Inject constructor(
     var app: Application,
-    var sm: SessionManager,
-    var repo: Repository
+    var repo: Repository,
+    var sm: SessionManager
 ) : BaseViewModel(app) {
 }

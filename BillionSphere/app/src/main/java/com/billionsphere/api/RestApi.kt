@@ -1,6 +1,8 @@
 package com.billionsphere.api
 
+import com.billionsphere.ui.login.model.LoginResponse
 import com.billionsphere.ui.register.model.GetDropDownsResponse
+import com.billionsphere.ui.register.model.RegisterResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -20,12 +22,26 @@ interface RestApi {
     suspend fun registerApi(
         @HeaderMap headers: Map<String, String>,
         @Body jsonObject: RequestBody
-    ): Response<ApiResult<Any>>
+    ): Response<ApiResult<RegisterResponse>>
 
     @POST(RESTURLS.dropdowns)
     suspend fun dropdownsApi(
         @HeaderMap headers: Map<String, String>,
         @Body jsonObject: RequestBody
     ): Response<ApiResult<GetDropDownsResponse>>
+
+    @POST(RESTURLS.login)
+    suspend fun loginApi(
+        @HeaderMap headers: Map<String, String>,
+        @Body jsonObject: RequestBody
+    ): Response<ApiResult<LoginResponse>>
+
+    @POST(RESTURLS.forgotPassword)
+    suspend fun forgotPasswordApi(
+        @HeaderMap headers: Map<String, String>,
+        @Body jsonObject: RequestBody
+    ): Response<ApiResult<Any>>
+
+
 
 }

@@ -9,7 +9,7 @@ data class RegisterUiState (
     var address : String = "",
     var city : String = "",
     var pinCode : String = "",
-    var stateId : Int = 0,
+    var state : String = "",
     var password : String = "",
     var confirmPassword : String = "",
     var sponsorName : String = "",

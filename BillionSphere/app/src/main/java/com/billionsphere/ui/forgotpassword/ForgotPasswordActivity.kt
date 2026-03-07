@@ -1,15 +1,31 @@
 package com.billionsphere.ui.forgotpassword
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import com.billionsphere.core.composecore.BaseVMComposeActivity
+import com.billionsphere.ui.register.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ForgotPasswordActivity : BaseVMComposeActivity<ForgotPasswordViewModel>(
-    ForgotPasswordViewModel::class.java
+class ForgotPasswordActivity : BaseVMComposeActivity<RegisterViewModel>(
+    RegisterViewModel::class.java
 ) {
     @Composable
-    override fun Content(vm: ForgotPasswordViewModel) {
+    override fun Content(vm: RegisterViewModel) {
         return ForgotPasswordScreen(vm)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setObservers()
+    }
+
+    private fun setObservers() {
+        viewModel.dropDownApiResponse.observe(this) {
+            it?.data.let {
+                val newCountryList = it.orEmpty()
+                viewModel._countryList.value = newCountryList
+            }
+        }
     }
 }

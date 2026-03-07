@@ -27,6 +27,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="enter_your_confirm_password">Enter your Confirm password</string>
+    <string name="enter_state">Enter State </string>
     <string name="reference_code">Reference Code</string>
     <string name="next">Next</string>
     <string name="by_using_billion_sphere_you_agree_to_the">By using Billion sphere, you agree to the</string>
@@ -44,4 +45,7 @@
     <string name="password_doesn_t_match">Password doesn\'t match</string>
     <string name="select_country">Select Country</string>
     <string name="no_data_found">No Data Found</string>
+    <string name="mobile_number_length_between_3_to_15">Mobile number length between 3 to 15</string>
+    <string name="otp">Otp</string>
+    <string name="verification">Verification</string>
 </resources>
