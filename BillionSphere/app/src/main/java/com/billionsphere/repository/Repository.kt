@@ -87,5 +87,17 @@ class Repository @Inject constructor(val api: RestApi) {
         }
     }
 
+    suspend fun resetPasswordApi(
+        headers: Map<String, String>, jsonObj: JSONObject,
+    ): Resource<ApiResult<Any>?> {
+
+        return safeApiCall {
+            api.resetPasswordApi(
+                headers, jsonObj.toString()
+                    .toRequestBody("application/json".toMediaTypeOrNull())
+            )
+        }
+    }
+
 
 }

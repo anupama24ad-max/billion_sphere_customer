@@ -54,6 +54,12 @@ interface RestApi {
         @Body jsonObject: RequestBody
     ): Response<ApiResult<Any>>
 
+    @POST(RESTURLS.resetPassword)
+    suspend fun resetPasswordApi(
+        @HeaderMap headers: Map<String, String>,
+        @Body jsonObject: RequestBody
+    ): Response<ApiResult<Any>>
+
 
 
 }

@@ -139,7 +139,9 @@ fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
                         shape = dimen_16,
                         enabled = isOtpEnabled
                     ) {
-                        vm.verifyOtpApi()
+//                        vm.verifyOtpApi()
+                        val intent = Intent(context, ResetPasswordActivity::class.java)
+                        context.startActivity(intent)
                     }
                 }
             }

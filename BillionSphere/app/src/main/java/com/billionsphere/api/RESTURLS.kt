@@ -8,6 +8,7 @@ class RESTURLS {
         const val forgotPassword = "forgot-password"
         const val verifyOtp = "verify-otp"
         const val resendOtp = "resend-otp"
+        const val resetPassword = "reset-password"
     }
 
 }
