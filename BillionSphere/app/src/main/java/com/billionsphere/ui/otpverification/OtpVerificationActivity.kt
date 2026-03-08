@@ -73,6 +73,9 @@ class OtpVerificationActivity : BaseVMComposeActivity<OtpVerificationViewModel>(
 
             }
         }
+        viewModel.resendOtpApiResponse.observe(this) {
+            viewModel.showSuccess(it?.message, autoHideMs = 2000L, blockUi = true)
+        }
     }
 
     private fun getIntentData() {

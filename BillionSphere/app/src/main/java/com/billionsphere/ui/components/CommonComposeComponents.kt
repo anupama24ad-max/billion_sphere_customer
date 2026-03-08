@@ -816,7 +816,7 @@ fun DefaultBottomSheet(
 @Composable
 fun ResendOtp(
     onResendOtp: () -> Unit,
-    totalSeconds: Int = 150,
+    totalSeconds: Int = 30,
 ) {
     var secondsLeft by rememberSaveable { mutableIntStateOf(totalSeconds) }
     var timerKey by rememberSaveable { mutableIntStateOf(0) } // bump to restart timer

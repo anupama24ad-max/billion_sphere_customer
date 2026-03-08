@@ -52,8 +52,6 @@ class OtpVerificationViewModel @Inject constructor(
         MutableLiveData()
     val resetPasswordApiResponse: LiveData<ApiResult<Any>?> = _resetPasswordApiResponse
 
-    var type = MutableLiveData<Int>(0)
-
     private val _verifyUiState = MutableStateFlow(LoginUiState())
     val verifyUiState = _verifyUiState.asStateFlow()
 
@@ -131,8 +129,8 @@ class OtpVerificationViewModel @Inject constructor(
 
     fun resendOtpApi() {
         val jsonObj = JSONObject()
-        jsonObj.put(AppStrings.InputData.type, type.value)
-        jsonObj.put(AppStrings.InputData.user_id, type.value)
+        jsonObj.put(AppStrings.InputData.type, verifyUiState.value.type)
+        jsonObj.put(AppStrings.InputData.user_id, verifyUiState.value.userId)
         viewModelScope.launch {
             runWhenOnline {
                 setIsLoading(true)
