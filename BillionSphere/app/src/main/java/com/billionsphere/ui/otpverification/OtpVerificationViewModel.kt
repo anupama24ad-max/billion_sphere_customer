@@ -155,7 +155,7 @@ class OtpVerificationViewModel @Inject constructor(
     fun resetPasswordApi() {
         val jsonObj = JSONObject()
         jsonObj.put(AppStrings.InputData.password, resetPasswordUiState.value.password.trim())
-        jsonObj.put(AppStrings.InputData.user_id, type.value)
+        jsonObj.put(AppStrings.InputData.user_id, sm.getData(AppStrings.SessionValues.userId, ""))
         viewModelScope.launch {
             runWhenOnline {
                 setIsLoading(true)

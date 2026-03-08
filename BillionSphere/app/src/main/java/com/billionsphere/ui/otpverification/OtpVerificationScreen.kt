@@ -105,7 +105,7 @@ fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
                     Spacer(modifier = Modifier.height(dimen_22))
                     Row {
                         Textview(
-                            text = when (verifyUiState.from) {
+                            text = when (verifyUiState.type) {
                                 AppStrings.Type.phoneNumber ->
                                     "Enter Otp to get your mobile number ${verifyUiState.countryCode} ${verifyUiState.phoneNumber}"
                                 AppStrings.Type.email ->

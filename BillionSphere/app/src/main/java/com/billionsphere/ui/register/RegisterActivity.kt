@@ -32,15 +32,15 @@ class RegisterActivity : BaseVMComposeActivity<RegisterViewModel>(RegisterViewMo
             }
         }
         viewModel.registerApiResponse.observe(this) {
+            viewModel.showSuccess(it?.message, autoHideMs = 2000L, blockUi = true)
             it?.data.let {
                 val intent = Intent(this, OtpVerificationActivity::class.java)
-                intent.putExtra(AppStrings.IntentData.from, AppStrings.Type.phoneNumber)
                 intent.putExtra(AppStrings.IntentData.email,it?.email.toString())
                 intent.putExtra(AppStrings.IntentData.phoneNumber,it?.contact_number.toString())
                 intent.putExtra(AppStrings.IntentData.countryCode,viewModel.registerUiState.value.countryCode)
                 intent.putExtra(AppStrings.IntentData.userId,it?.id.toString())
                 intent.putExtra(AppStrings.IntentData.type,AppStrings.Type.phoneNumber)
-                intent.putExtra(AppStrings.IntentData.countryCode,viewModel.registerUiState.value.countryCode )
+                intent.putExtra(AppStrings.IntentData.from,AppStrings.Type.phoneNumber)
                 startActivity(intent)
             }
         }

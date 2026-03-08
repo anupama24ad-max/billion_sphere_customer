@@ -1,5 +1,6 @@
 package com.billionsphere.api
 
+import com.billionsphere.ui.forgotpassword.model.ForgotPasswordResponse
 import com.billionsphere.ui.login.model.LoginResponse
 import com.billionsphere.ui.otpverification.model.OtpVerificationResponse
 import com.billionsphere.ui.register.model.GetDropDownsResponse
@@ -41,7 +42,7 @@ interface RestApi {
     suspend fun forgotPasswordApi(
         @HeaderMap headers: Map<String, String>,
         @Body jsonObject: RequestBody
-    ): Response<ApiResult<Any>>
+    ): Response<ApiResult<ForgotPasswordResponse>>
 
     @POST(RESTURLS.verifyOtp)
     suspend fun verifyOtpApi(

@@ -122,6 +122,11 @@ class AppStrings {
             val nav = 3
         }
     }
+    class FromActivity{
+        companion object{
+            val forgotPasswordScreen = "forgotPasswordScreen"
+        }
+    }
 
 
 

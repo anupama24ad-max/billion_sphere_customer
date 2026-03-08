@@ -4,6 +4,7 @@ import com.billionsphere.api.ApiResult
 import com.billionsphere.api.Resource
 import com.billionsphere.api.RestApi
 import com.billionsphere.api.safeApiCall
+import com.billionsphere.ui.forgotpassword.model.ForgotPasswordResponse
 import com.billionsphere.ui.login.model.LoginResponse
 import com.billionsphere.ui.otpverification.model.OtpVerificationResponse
 import com.billionsphere.ui.register.model.GetDropDownsResponse
@@ -55,7 +56,7 @@ class Repository @Inject constructor(val api: RestApi) {
 
     suspend fun forgotPasswordApi(
         headers: Map<String, String>, jsonObj: JSONObject,
-    ): Resource<ApiResult<Any>?> {
+    ): Resource<ApiResult<ForgotPasswordResponse>?> {
 
         return safeApiCall {
             api.forgotPasswordApi(

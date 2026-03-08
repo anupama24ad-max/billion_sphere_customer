@@ -27,5 +27,10 @@ class LoginActivity : BaseVMComposeActivity<RegisterViewModel>(RegisterViewModel
                 viewModel._countryList.value = newCountryList
             }
         }
+        viewModel.loginApiResponse.observe(this){
+            it?.data.let {
+
+            }
+        }
     }
 }

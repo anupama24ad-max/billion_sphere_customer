@@ -12,6 +12,7 @@ import com.billionsphere.api.ApiResult
 import com.billionsphere.api.isRequestCallSuspendSuccess
 import com.billionsphere.core.BaseViewModel
 import com.billionsphere.repository.Repository
+import com.billionsphere.ui.forgotpassword.model.ForgotPasswordResponse
 import com.billionsphere.ui.login.model.LoginResponse
 import com.billionsphere.ui.login.model.LoginUiState
 import com.billionsphere.ui.register.model.GetDropDownsResponse
@@ -74,9 +75,9 @@ class RegisterViewModel @Inject constructor(
         MutableLiveData()
     val loginApiResponse: LiveData<ApiResult<LoginResponse>?> = _loginApiResponse
 
-    private val _forgotPasswordApiResponse: MutableLiveData<ApiResult<Any>?> =
+    private val _forgotPasswordApiResponse: MutableLiveData<ApiResult<ForgotPasswordResponse>?> =
         MutableLiveData()
-    val forgotPasswordApiResponse: LiveData<ApiResult<Any>?> = _forgotPasswordApiResponse
+    val forgotPasswordApiResponse: LiveData<ApiResult<ForgotPasswordResponse>?> = _forgotPasswordApiResponse
 
     val _countryList = MutableStateFlow<List<GetDropDownsResponseItem>?>(emptyList())
     val countryList: StateFlow<List<GetDropDownsResponseItem>?> = _countryList

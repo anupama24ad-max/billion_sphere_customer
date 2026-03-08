@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.compose.runtime.Composable
 import com.billionsphere.core.composecore.BaseVMComposeActivity
 import com.billionsphere.ui.home.HomeActivity
+import com.billionsphere.ui.resetpassword.ResetPasswordActivity
 import com.billionsphere.utils.AppStrings
 import com.billionsphere.utils.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,33 +33,49 @@ class OtpVerificationActivity : BaseVMComposeActivity<OtpVerificationViewModel>(
         viewModel.verifyOtpApiResponse.observe(this) {
             viewModel.showSuccess(it?.message, autoHideMs = 2000L, blockUi = true)
             it?.data.let {
-                if (viewModel.verifyUiState.value.from == AppStrings.Type.phoneNumber) {
-                    viewModel.verifyUiState.value.type = AppStrings.Type.email
-                    viewModel.verifyUiState.value.from = AppStrings.Type.email
-                    viewModel.updateVerifyUiState {
-                        copy(
-                            type = AppStrings.Type.email,
-                            otp = ""
-                        )
-                    }
-                } else if (viewModel.verifyUiState.value.from == AppStrings.Type.email) {
+                if (viewModel.verifyUiState.value.from == AppStrings.FromActivity.forgotPasswordScreen) {
                     sm.setData(AppStrings.SessionValues.userId, it?.id.toString())
                     sm.setData(AppStrings.SessionValues.email, it?.email.toString())
                     sm.setData(AppStrings.SessionValues.firstName, it?.first_name.toString())
                     sm.setData(AppStrings.SessionValues.lastName, it?.last_name.toString())
                     sm.setData(AppStrings.SessionValues.accessToken, it?.access_token.toString())
                     sm.setData(AppStrings.SessionValues.refreshToken, it?.refresh_token.toString())
-                    sm.setUserLoggedIn(true)
-                    val intent = Intent(this, HomeActivity::class.java)
+                    val intent = Intent(this, ResetPasswordActivity::class.java)
                     startActivity(intent)
-                    finish()
+                } else {
+                    if (viewModel.verifyUiState.value.type == AppStrings.Type.phoneNumber) {
+                        viewModel.verifyUiState.value.type = AppStrings.Type.email
+                        viewModel.updateVerifyUiState {
+                            copy(
+                                type = AppStrings.Type.email,
+                                otp = ""
+                            )
+                        }
+                    } else if (viewModel.verifyUiState.value.type == AppStrings.Type.email) {
+                        sm.setData(AppStrings.SessionValues.userId, it?.id.toString())
+                        sm.setData(AppStrings.SessionValues.email, it?.email.toString())
+                        sm.setData(AppStrings.SessionValues.firstName, it?.first_name.toString())
+                        sm.setData(AppStrings.SessionValues.lastName, it?.last_name.toString())
+                        sm.setData(
+                            AppStrings.SessionValues.accessToken,
+                            it?.access_token.toString()
+                        )
+                        sm.setData(
+                            AppStrings.SessionValues.refreshToken,
+                            it?.refresh_token.toString()
+                        )
+                        sm.setUserLoggedIn(true)
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
+
             }
         }
     }
 
     private fun getIntentData() {
-        viewModel.verifyUiState.value.from = intent.getIntExtra(AppStrings.IntentData.from, 0)
         viewModel.verifyUiState.value.email =
             intent.getStringExtra(AppStrings.IntentData.email).toString()
         viewModel.verifyUiState.value.phoneNumber =
@@ -68,5 +85,7 @@ class OtpVerificationActivity : BaseVMComposeActivity<OtpVerificationViewModel>(
         viewModel.verifyUiState.value.type = intent.getIntExtra(AppStrings.IntentData.type, 0)
         viewModel.verifyUiState.value.countryCode =
             intent.getStringExtra(AppStrings.IntentData.countryCode).toString()
+        viewModel.verifyUiState.value.from =
+            intent.getStringExtra(AppStrings.IntentData.from).toString()
     }
 }

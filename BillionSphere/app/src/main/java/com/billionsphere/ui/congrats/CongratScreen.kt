@@ -1,5 +1,6 @@
 package com.billionsphere.ui.congrats
 
+import android.app.Activity
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
@@ -19,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,12 +35,22 @@ import androidx.compose.ui.unit.dp
 import com.billionsphere.R
 import com.billionsphere.ui.components.GradientButton
 import com.billionsphere.ui.components.Textview
+import com.billionsphere.ui.login.LoginActivity
+import com.billionsphere.ui.onboarding.OnboardingActivity
 import com.billionsphere.ui.register.RegisterViewModel
 import com.billionsphere.ui.theme.*
+import kotlinx.coroutines.delay
 
 @Composable
 fun CongratScreen(vm: RegisterViewModel) {
 
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        delay(2000)
+        context.startActivity(Intent(context, LoginActivity::class.java))
+        (context as? Activity)?.finish()
+    }
     Box(modifier = Modifier.fillMaxSize()) {
 
         Image(

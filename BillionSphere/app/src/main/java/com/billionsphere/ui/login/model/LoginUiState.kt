@@ -9,8 +9,9 @@ data class LoginUiState(
     var countryId: Int = 0,
     var type : Int = 0,
     var otp : String = "",
-    var from : Int = 0,
+    var verificationType : Int = 0,
     var email : String = "",
     var phoneNumber : String = "",
-    var userId : String = ""
+    var userId : String = "",
+    var from : String = ""
 )
