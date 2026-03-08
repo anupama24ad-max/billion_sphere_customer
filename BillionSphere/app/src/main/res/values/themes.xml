@@ -12,4 +12,23 @@
 
     </style>
 
+    <!-- Launcher splash theme (used only at app start) -->
+    <style name="Theme.App.Splash" parent="Theme.SplashScreen">
+        <!-- Background color behind the icon -->
+        <item name="windowSplashScreenBackground">@color/black</item>
+
+        <!-- Your adaptive launcher foreground as animated/static icon -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/android_12_splash</item>
+
+        <!-- Optional: keep icon visible after app theme applied while content draws -->
+        <item name="postSplashScreenTheme">@style/Theme.BillionSphere</item>
+    </style>
+
+    <style name="Theme.UCrop.AppCompat" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Optional: tint to match your brand -->
+    <item name="colorPrimary">#FF6200EE</item>
+    <item name="colorPrimaryDark">#FF3700B3</item>
+    <item name="colorAccent">#FF03DAC5</item>
+    </style>
+
 </resources>

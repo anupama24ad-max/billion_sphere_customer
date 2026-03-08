@@ -556,27 +556,37 @@ fun CompactDropdownWithLabel(
 
 @Composable
 fun OtpView(
+    value: String,
     modifier: Modifier = Modifier,
     cells: Int = 6,
+    isNumber: Boolean = false,
     keyboardOpen: Boolean = false,
     onFilled: (String) -> Unit = {},
     onChanged: (String) -> Unit = {} // <— add this
 ) {
-    var value by rememberSaveable { mutableStateOf("") }
 
     OtpField(
         value = value,
         onValueChange = {
-            val digitsOnly = it.filter(Char::isDigit).take(cells)
-            if (digitsOnly != value) {
-                value = digitsOnly
-                onChanged(digitsOnly)                 // notify parent every change
-                if (digitsOnly.length == cells) onFilled(digitsOnly)
+            if (isNumber) {
+                val digitsOnly = it.filter(Char::isDigit).take(cells)
+                if (digitsOnly != value) {
+                    onChanged(digitsOnly)                 // notify parent every change
+                    if (digitsOnly.length == cells) onFilled(digitsOnly)
+                }
+            } else {
+                val newValue = it.take(cells)
+                if (newValue != value) {
+                    onChanged(newValue)
+                    if (newValue.length == cells) onFilled(newValue)
+                }
             }
+
         },
         cells = cells,
         modifier = modifier,
         keyboardOpen = keyboardOpen,
+        isNumber = isNumber
     )
 }
 
@@ -592,8 +602,9 @@ fun OtpField(
     gap: Dp = dimen_10,
     placeholderChar: Char = '0',
     keyboardOpen: Boolean = false,
+    isNumber: Boolean = false
 
-    ) {
+) {
     val focusRequester = remember { FocusRequester() }
     val bg = Color.White.copy(alpha = 0.08f)
     val placeholderColor = LightGrey
@@ -607,7 +618,9 @@ fun OtpField(
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = if (isNumber) KeyboardType.Number else KeyboardType.Text
+        ),
         cursorBrush = SolidColor(Color.Transparent), // hide cursor
         modifier = modifier
             .focusRequester(focusRequester)
@@ -645,7 +658,7 @@ fun OtpField(
                                     fontWeight = FontWeight.Medium,
                                 ),
                                 color = if (value.getOrNull(index) != null)
-                                    MaterialTheme.colorScheme.onSurface
+                                    LightGrey
                                 else
                                     placeholderColor
                             )

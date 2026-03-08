@@ -283,16 +283,16 @@ fun RegisterScreen(vm: RegisterViewModel) {
 
                     }
                     Spacer(modifier = Modifier.height(dimen_10))
-                /*    CompactDropdownWithLabel(
-                        placeholder = stringResource(R.string.select_state),
-                        isImage = true,
-                        labelMedium = true,
-                        onClick = {
+                    /*    CompactDropdownWithLabel(
+                            placeholder = stringResource(R.string.select_state),
+                            isImage = true,
+                            labelMedium = true,
+                            onClick = {
 
-                        },
-                        labelRes = R.string.state,
-                        isRequired = true
-                    )*/
+                            },
+                            labelRes = R.string.state,
+                            isRequired = true
+                        )*/
                     LabeledField(
                         labelRes = R.string.state,
                         value = registerUiState.state,
@@ -303,7 +303,6 @@ fun RegisterScreen(vm: RegisterViewModel) {
                             }
                         },
                         labelMedium = true,
-                        isPassword = true,
                         labelBold = false,
                         isRequired = true,
                         imeAction = ImeAction.Next,
@@ -377,10 +376,11 @@ fun RegisterScreen(vm: RegisterViewModel) {
                     )
                     Spacer(modifier = Modifier.height(dimen_10))
                     OtpView(
+                        value = registerUiState.referenceCode,
                         onFilled = {
                         },
                         onChanged = {
-                            vm.updateRegisterUiState{copy(referenceCode = it)}
+                            vm.updateRegisterUiState { copy(referenceCode = it) }
                         }
 
                     )

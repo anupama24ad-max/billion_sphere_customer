@@ -1,6 +1,7 @@
 package com.billionsphere.api
 
 import com.billionsphere.ui.login.model.LoginResponse
+import com.billionsphere.ui.otpverification.model.OtpVerificationResponse
 import com.billionsphere.ui.register.model.GetDropDownsResponse
 import com.billionsphere.ui.register.model.RegisterResponse
 import okhttp3.MultipartBody
@@ -46,7 +47,7 @@ interface RestApi {
     suspend fun verifyOtpApi(
         @HeaderMap headers: Map<String, String>,
         @Body jsonObject: RequestBody
-    ): Response<ApiResult<Any>>
+    ): Response<ApiResult<OtpVerificationResponse>>
 
     @POST(RESTURLS.resendOtp)
     suspend fun resendOtpApi(

@@ -12,6 +12,7 @@ import com.billionsphere.api.isRequestCallSuspendSuccess
 import com.billionsphere.core.BaseViewModel
 import com.billionsphere.repository.Repository
 import com.billionsphere.ui.login.model.LoginUiState
+import com.billionsphere.ui.otpverification.model.OtpVerificationResponse
 import com.billionsphere.ui.register.model.RegisterResponse
 import com.billionsphere.ui.register.model.RegisterUiState
 import com.billionsphere.ui.resetpassword.model.ResetPasswordUiState
@@ -39,9 +40,9 @@ class OtpVerificationViewModel @Inject constructor(
 
     private val TAG = "OtpVerificationViewModel"
 
-    private val _verifyOtpApiResponse: MutableLiveData<ApiResult<Any>?> =
+    private val _verifyOtpApiResponse: MutableLiveData<ApiResult<OtpVerificationResponse>?> =
         MutableLiveData()
-    val verifyOtpApiResponse: LiveData<ApiResult<Any>?> = _verifyOtpApiResponse
+    val verifyOtpApiResponse: LiveData<ApiResult<OtpVerificationResponse>?> = _verifyOtpApiResponse
 
     private val _resendOtpApiResponse: MutableLiveData<ApiResult<Any>?> =
         MutableLiveData()
@@ -106,8 +107,8 @@ class OtpVerificationViewModel @Inject constructor(
 
     fun verifyOtpApi() {
         val jsonObj = JSONObject()
-        jsonObj.put(AppStrings.InputData.type, type.value)
-        jsonObj.put(AppStrings.InputData.user_id, type.value)
+        jsonObj.put(AppStrings.InputData.type, verifyUiState.value.type)
+        jsonObj.put(AppStrings.InputData.user_id, verifyUiState.value.userId)
         jsonObj.put(AppStrings.InputData.otp, verifyUiState.value.otp.trim())
         viewModelScope.launch {
             runWhenOnline {

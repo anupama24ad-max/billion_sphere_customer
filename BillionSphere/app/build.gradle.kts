@@ -200,4 +200,7 @@ dependencies {
 
     implementation(libs.okhttp.v493)
     implementation(libs.logging.interceptor)
+
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
 }

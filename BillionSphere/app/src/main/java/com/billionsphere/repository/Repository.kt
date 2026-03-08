@@ -5,6 +5,7 @@ import com.billionsphere.api.Resource
 import com.billionsphere.api.RestApi
 import com.billionsphere.api.safeApiCall
 import com.billionsphere.ui.login.model.LoginResponse
+import com.billionsphere.ui.otpverification.model.OtpVerificationResponse
 import com.billionsphere.ui.register.model.GetDropDownsResponse
 import com.billionsphere.ui.register.model.RegisterResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -65,7 +66,7 @@ class Repository @Inject constructor(val api: RestApi) {
     }
     suspend fun verifyOtpApi(
         headers: Map<String, String>, jsonObj: JSONObject,
-    ): Resource<ApiResult<Any>?> {
+    ): Resource<ApiResult<OtpVerificationResponse>?> {
 
         return safeApiCall {
             api.verifyOtpApi(

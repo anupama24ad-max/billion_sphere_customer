@@ -43,6 +43,7 @@ import com.billionsphere.ui.components.ResendOtp
 import com.billionsphere.ui.components.Textview
 import com.billionsphere.ui.resetpassword.ResetPasswordActivity
 import com.billionsphere.ui.theme.*
+import com.billionsphere.utils.AppStrings
 
 @Composable
 fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
@@ -104,7 +105,13 @@ fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
                     Spacer(modifier = Modifier.height(dimen_22))
                     Row {
                         Textview(
-                            text = "Enter Otp",
+                            text = when (verifyUiState.from) {
+                                AppStrings.Type.phoneNumber ->
+                                    "Enter Otp to get your mobile number ${verifyUiState.countryCode} ${verifyUiState.phoneNumber}"
+                                AppStrings.Type.email ->
+                                    "Enter Otp to verify your email ${verifyUiState.email}"
+                                else -> ""
+                            },
                             color = LightGrey,
                             size = font_14,
                             medium = true
@@ -112,6 +119,7 @@ fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
                     }
                     Spacer(modifier = Modifier.height(dimen_10))
                     OtpView(
+                        value = verifyUiState.otp,
                         onFilled = {
                         },
                         onChanged = {
@@ -139,9 +147,9 @@ fun OtpVerificationScreen(vm: OtpVerificationViewModel) {
                         shape = dimen_16,
                         enabled = isOtpEnabled
                     ) {
-//                        vm.verifyOtpApi()
-                        val intent = Intent(context, ResetPasswordActivity::class.java)
-                        context.startActivity(intent)
+                        vm.verifyOtpApi()
+//                        val intent = Intent(context, ResetPasswordActivity::class.java)
+//                        context.startActivity(intent)
                     }
                 }
             }

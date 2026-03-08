@@ -15,6 +15,8 @@ class AppStrings {
             var contactNumber = "contactNumber"
             var customerId = "customerId"
             var accountStatus = "accountStatus"
+            var firstName = "firstName"
+            var lastName = "lastName"
 
         }
     }
@@ -86,6 +88,10 @@ class AppStrings {
             var categoryId = "categoryId"
             var serviceId = "serviceId"
             var particulars = "particulars"
+            var email = "email"
+            var phoneNumber = "phoneNumber"
+            var countryCode = "countryCode"
+            var userId = "userId"
         }
     }
     class Type{
@@ -116,6 +122,7 @@ class AppStrings {
             val nav = 3
         }
     }
+
 
 
 
