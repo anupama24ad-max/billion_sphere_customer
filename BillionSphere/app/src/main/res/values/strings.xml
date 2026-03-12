@@ -50,4 +50,20 @@
     <string name="verification">Verification</string>
     <string name="i_don_t_receive_code">I don\'t Receive code !</string>
     <string name="resend_otp">Resend Otp</string>
+    <string name="marketiqon">MARKETIQON</string>
+    <string name="digital_advertising_platform">Digital Advertising Platform</string>
+    <string name="buyla">BUYLA</string>
+    <string name="e_commerce_platform">E-Commerce Platform</string>
+    <string name="ledgira">LEDGIRA</string>
+    <string name="accounting_software"><![CDATA[Accounting & Software]]></string>
+    <string name="tripora">TRIPORA</string>
+    <string name="travel_rides_logistics"><![CDATA[Travel, Rides & Logistics]]></string>
+    <string name="foodelt">FOODELT</string>
+    <string name="food_delivery_platform">Food Delivery Platform</string>
+    <string name="gamorax">GAMORAX</string>
+    <string name="gaming_platform">Gaming Platform</string>
+    <string name="stoxenova">STOXENOVA</string>
+    <string name="stock_market_learning"><![CDATA[Stock Market & Learning]]></string>
+    <string name="crealooma">CREALOOMA</string>
+    <string name="creator_social_platform">Creator Social Platform</string>
 </resources>

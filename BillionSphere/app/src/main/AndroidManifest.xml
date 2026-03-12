@@ -26,11 +26,6 @@
             android:name=".ui.onboarding.OnboardingActivity"
             android:exported="true"
             android:theme="@style/Theme.BillionSphere">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.register.RegisterActivity"
@@ -66,7 +61,8 @@
             android:name=".ui.home.HomeActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.BillionSphere" />
+            android:theme="@style/Theme.BillionSphere" >
+        </activity>
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true"

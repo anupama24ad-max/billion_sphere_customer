@@ -56,6 +56,7 @@ val dimen_102 = 102.dp
 val dimen_106 = 106.dp
 val dimen_112 = 112.dp
 val dimen_120 = 120.dp
+val dimen_122 = 122.dp
 val dimen_140 = 140.dp
 val dimen_148 = 148.dp
 val dimen_150 = 150.dp
